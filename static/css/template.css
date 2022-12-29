@@ -1,0 +1,5 @@
+/* aplica a regra apenas aos elementos dentro do elemento canvas */
+#grafico > * {
+    /* altera a cor das barras para azul */
+    fill: blue;
+}

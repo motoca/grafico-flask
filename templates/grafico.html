@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gráfico de API</title>
+    <!-- inclui o Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+      fetch('http://localhost:2000/filmes')
+        .then(response => response.json())
+        .then(data => {
+          var labels = data.map(item => item.label);
+          var values = data.map(item => item.value);
+
+          var ctx = document.getElementById('grafico').getContext('2d');
+          var chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Meus dados',
+                data: values,
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+              }]
+            },
+            options: {
+              responsive: false,
+              scales: {
+                yAxes: [{
+                  ticks: {
+                    beginAtZero: true
+                  }
+                }]
+              }
+            }
+          });
+        })
+        .catch(error => {
+          return "Erro ao carregar dados"
+        });  
+    </script>
+
+    <link rel="stylesheet" href="static/css/template.css">
+  </head>
+  <body>
+    {% extends "menu.html" %}
+    {% block content %}
+
+    <!-- cria um elemento canvas para exibir o gráfico -->
+    <div style="width: 900px; height: 600px;">
+      <canvas id="grafico"></canvas>
+    </div>
+
+    {% endblock %}
+  </body>
+</html>
